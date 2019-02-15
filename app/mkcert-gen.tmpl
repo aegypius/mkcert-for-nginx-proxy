@@ -1,0 +1,22 @@
+#!/bin/bash
+
+[[ $DEBUG == true ]] && set -x
+
+# Mimic Let's encrypt structure
+function gen {
+  [ -f "$1.crt" ] || {
+    CERT_FILE="./$1/fullchain.pem"
+    KEY_FILE="./$1/key.pem"
+    mkdir -p $1
+    mkcert -cert-file ${CERT_FILE} -key-file ${KEY_FILE} "$@"
+
+    ln -s ${CERT_FILE} $1.crt
+    ln -s ${KEY_FILE} $1.key
+  }
+  [ -f ./dhparam.pem ] && [ ! -f $1.dhparam.pem ] && ln -s ./dhparam.pem $1.dhparam.pem
+}
+
+{{ range $hosts, $containers := groupBy $ "Env.VIRTUAL_HOST" }}
+{{ $hosts := split (trimSuffix "," $hosts) "," }}
+gen {{ range $host := $hosts }}{{ $host := trim $host }} '{{ $host }}'{{ end }}
+{{ end }}

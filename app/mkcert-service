@@ -1,0 +1,27 @@
+#!/bin/bash
+# shellcheck disable=SC2155
+
+[[ "$DEBUG" == true ]] && set -x
+
+source /app/functions.sh
+
+seconds_to_wait=30
+
+function update_certs {
+  echo "Update certs"
+  [ -f /app/mkcert-gen ] && bash /app/mkcert-gen
+}
+
+pid=
+# Service Loop: When this script exits, start it again.
+trap '[[ $pid ]] && kill $pid; exec $0' EXIT
+trap 'trap - EXIT' INT TERM
+
+mkcert -install
+update_certs
+
+# Wait some amount of time
+echo "Sleep for ${seconds_to_wait}s"
+sleep $seconds_to_wait & pid=$!
+wait
+pid=
