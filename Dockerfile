@@ -27,7 +27,7 @@ ENV DEBUG=false \
 VOLUME /app/certs /app/ca
 WORKDIR /app/certs
 
-RUN apt-get update -qqy && apt-get install -qy openssl libnss3-tools ca-certificates
+RUN apt-get update -qqy && apt-get install -qy openssl libnss3-tools ca-certificates procps jq curl
 
 COPY --from=builder /usr/local/bin/docker-gen /usr/local/bin/docker-gen
 COPY --from=builder /usr/local/bin/mkcert /usr/local/bin/mkcert

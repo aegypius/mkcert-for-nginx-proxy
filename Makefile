@@ -2,6 +2,7 @@
 
 NAME=mkcert-for-nginx-proxy
 NAMESPACE=aegypius
+TAG=$(shell git rev-parse --short HEAD)
 
 build:
 	docker build -t ${NAMESPACE}/${NAME} .

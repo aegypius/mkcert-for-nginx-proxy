@@ -62,7 +62,7 @@ function is_docker_gen_container {
 
 function get_docker_gen_container {
     # First try to get the docker-gen container ID from the container label.
-    local docker_gen_cid="$(labeled_cid com.github.aegypius.mkcert_nginx_proxy_companion.docker_gen)"
+    local docker_gen_cid="$(labeled_cid com.github.aegypius.mkcert-for-nginx-proxy.docker_gen)"
 
     # If the labeled_cid function dit not return anything and the env var is set, use it.
     if [[ -z "$docker_gen_cid" ]] && [[ -n "${NGINX_DOCKER_GEN_CONTAINER:-}" ]]; then
@@ -76,7 +76,7 @@ function get_docker_gen_container {
 function get_nginx_proxy_container {
     local volumes_from
     # First try to get the nginx container ID from the container label.
-    local nginx_cid="$(labeled_cid com.github.aegypius.mkcert_nginx_proxy_companion.nginx_proxy)"
+    local nginx_cid="$(labeled_cid com.github.aegypius.mkcert-for-nginx-proxy.nginx_proxy)"
 
     # If the labeled_cid function dit not return anything ...
     if [[ -z "${nginx_cid}" ]]; then
@@ -98,6 +98,27 @@ function get_nginx_proxy_container {
 
     # If a container ID was found, output it. The function will return 1 otherwise.
     [[ -n "$nginx_cid" ]] && echo "$nginx_cid"
+}
+
+function get_self_cid {
+    local self_cid
+
+    # Try the /proc files methods first then resort to the Docker API.
+    if [[ -f /proc/1/cpuset ]]; then
+        self_cid="$(basename "$(cat /proc/1/cpuset)")"
+    elif [[ -f /proc/self/cgroup ]]; then
+        self_cid="$(basename "$(cat /proc/self/cgroup | head -n 1)")"
+    else
+        self_cid="$(docker_api "/containers/$(hostname)/json" | jq -r '.Id')"
+    fi
+
+    # If it's not 64 characters long, then it's probably not a container ID.
+    if [[ ${#self_cid} == 64 ]]; then
+        echo "$self_cid"
+    else
+        echo "$(date "+%Y/%m/%d %T"), Error: can't get my container ID !" >&2
+        return 1
+    fi
 }
 
 ## Nginx

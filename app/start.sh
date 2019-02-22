@@ -12,7 +12,7 @@ trap 'term_handler' INT QUIT TERM
 
 /app/mkcert-service & mkcert_service_pid=$!
 
-docker-gen -watch -notify '/app/signal-mkcert-service' -wait 15s:60s /app/mkcert-gen.tmpl /app/mkcert-gen & docker_gen_pid=$!
+docker-gen -watch -notify '/app/signal-mkcert-service' -wait 3s:60s /app/mkcert-gen.tmpl /app/mkcert-gen & docker_gen_pid=$!
 
 # wait "indefinitely"
 while [[ -e /proc/$docker_gen_pid ]]; do
