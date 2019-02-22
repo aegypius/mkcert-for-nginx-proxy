@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source functions.sh
+
 [[ $DEBUG == true ]] && set -x
 
 # Mimic Let's encrypt structure
@@ -12,6 +14,8 @@ function gen {
 
     ln -s ${CERT_FILE} $1.crt
     ln -s ${KEY_FILE} $1.key
+
+    reload_nginx
   }
   [ -f ./dhparam.pem ] && [ ! -f $1.dhparam.pem ] && ln -s ./dhparam.pem $1.dhparam.pem
 }
