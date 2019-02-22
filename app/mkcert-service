@@ -3,9 +3,7 @@
 
 [[ "$DEBUG" == true ]] && set -x
 
-source /app/functions.sh
-
-seconds_to_wait=30
+seconds_to_wait=3600
 
 function update_certs {
   echo "Update certs"

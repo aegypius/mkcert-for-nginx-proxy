@@ -10,9 +10,8 @@ run: build
 	docker run --rm -e DEBUG=true \
 		--name ${NAME} \
 		--volume /var/run/docker.sock:/var/run/docker.sock:ro \
-		--volume /var/run/docker.sock:/var/run/docker.sock:ro \
 		-it ${NAMESPACE}/${NAME}
 
 publish: build
-	docker tag ${NAMESPACE}/${NAME} ${NAMESPACE}/${NAME}:`git rev-parse --short HEAD`
-	docker push ${NAMESPACE}/${NAME}:`git rev-parse --short HEAD`
+	docker tag ${NAMESPACE}/${NAME} ${NAMESPACE}/${NAME}:${TAG}
+	docker push ${NAMESPACE}/${NAME}:${TAG}
