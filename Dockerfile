@@ -6,7 +6,7 @@ RUN apt update -qy && apt install -y curl lzma
 
 ENV DEBUG=false \
   DOCKER_GEN_VERSION=0.7.4 \
-  MKCERT_VERSION=1.2.0 \
+  MKCERT_VERSION=1.4.1 \
   SANDBOX_VERSION=2.2 \
   DOCKER_HOST=unix:///var/run/docker.sock
 
