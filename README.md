@@ -1,7 +1,7 @@
 # mkcert for nginx-proxy
 
 mkcert-for-nginx-proxy is a lightweight companion container for the [jwilder/nginx-proxy].
-It's heavily inspired by [JrCs/letsencrypt-nginx-proxy-companion] and it allows the creation/renewal
+It's heavily inspired by [nginx-proxy/acme-companion] and it allows the creation/renewal
 of self-signed certificate with a root certificate authority.
 
 ### Features
@@ -12,7 +12,7 @@ of self-signed certificate with a root certificate authority.
 
 ### Usage
 
-Here is an example of  a docker-compose file that should work with jwilder/nginx-proxy:
+Here is an example of  a docker-compose file that should work with nginx-proxy/nginx-proxy:
 
 ```yaml
 version: '3.2'
@@ -34,7 +34,7 @@ services:
     - /var/run/docker.sock:/var/run/docker.sock:ro
 
   proxy:
-    image: jwilder/nginx-proxy
+    image: nginx-proxy/nginx-proxy
     labels:
       com.github.aegypius.mkcert-for-nginx-proxy.nginx_proxy: ''
     networks:
@@ -91,11 +91,11 @@ Restart your browsers !
 ### Related projects
 
 - [FiloSottile/mkcert]
-- [JrCS/letsencrypt-nginx-proxy-companion]
-- [jwilder/docker-gen]
-- [jwilder/nginx-proxy]
+- [nginx-proxy/acme-companion]
+- [nginx-proxy/docker-gen]
+- [nginx-proxy/nginx-proxy]
 
-[FiloSottile/mkcert]: https://github.com/FiloSottile/FiloSottile/mkcert
-[JrCs/letsencrypt-nginx-proxy-companion]: https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
-[jwilder/nginx-proxy]: https://github.com/jwilder/nginx-proxy
-[jwilder/docker-gen]: https://github.com/jwilder/docker-gen
+[FiloSottile/mkcert]: https://github.com/FiloSottile/mkcert
+[nginx-proxy/acme-companion]: https://github.com/nginx-proxy/acme-companion
+[nginx-proxy/nginx-proxy]: https://github.com/nginx-proxy/nginx-proxy
+[nginx-proxy/docker-gen]: https://github.com/nginx-proxy/docker-gen
