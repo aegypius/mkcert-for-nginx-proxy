@@ -1,6 +1,6 @@
 # mkcert for nginx-proxy
 
-mkcert-for-nginx-proxy is a lightweight companion container for the [jwilder/nginx-proxy].
+mkcert-for-nginx-proxy is a lightweight companion container for the [nginx-proxy/nginx-proxy].
 It's heavily inspired by [nginx-proxy/acme-companion] and it allows the creation/renewal
 of self-signed certificate with a root certificate authority.
 
